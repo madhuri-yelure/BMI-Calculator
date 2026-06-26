@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> BMI Calculator</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,#667eea,#764ba2);
+    }
+
+    .container{
+      width:380px;
+      background:white;
+      padding:30px;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+      animation:fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:20px;
+      color:#333;
+    }
+
+    .input-group{
+      margin-bottom:15px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:5px;
+      color:#555;
+      font-weight:bold;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      border:2px solid #ddd;
+      border-radius:10px;
+      font-size:16px;
+      transition:0.3s;
+    }
+
+    input:focus{
+      border-color:#667eea;
+      outline:none;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:#667eea;
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+      transition:0.3s;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#5a67d8;
+      transform:scale(1.02);
+    }
+
+    .result{
+      margin-top:20px;
+      padding:15px;
+      border-radius:10px;
+      text-align:center;
+      display:none;
+      animation:showResult 0.5s ease;
+    }
+
+    @keyframes showResult{
+      from{
+        opacity:0;
+        transform:scale(0.8);
+      }
+      to{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
+    .bmi-value{
+      font-size:35px;
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    .status{
+      font-size:22px;
+      font-weight:bold;
+    }
+
+    .underweight{
+      background:#fff3cd;
+      color:#856404;
+    }
+
+    .normal{
+      background:#d4edda;
+      color:#155724;
+    }
+
+    .overweight{
+      background:#ffeeba;
+      color:#856404;
+    }
+
+    .obese{
+      background:#f8d7da;
+      color:#721c24;
+    }
+
+    .info{
+      margin-top:15px;
+      font-size:14px;
+      color:#666;
+      text-align:center;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>BMI Calculator</h1>
+
+    <div class="input-group">
+      <label>Height (cm)</label>
+      <input type="number" id="height" placeholder="Enter your height">
+    </div>
+
+    <div class="input-group">
+      <label>Weight (kg)</label>
+      <input type="number" id="weight" placeholder="Enter your weight">
+    </div>
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <div class="result" id="result">
+      <div class="bmi-value" id="bmiValue"></div>
+      <div class="status" id="status"></div>
+      <div class="info" id="info"></div>
+    </div>
+
+  </div>
+
+  <script>
+
+    function calculateBMI(){
+
+      let height = document.getElementById("height").value;
+      let weight = document.getElementById("weight").value;
+
+      if(height === "" || weight === ""){
+        alert("Please enter height and weight");
+        return;
+      }
+
+      height = height / 100;
+
+      let bmi = weight / (height * height);
+
+      bmi = bmi.toFixed(1);
+
+      let status = "";
+      let className = "";
+      let info = "";
+
+      if(bmi < 18.5){
+        status = "Underweight";
+        className = "underweight";
+        info = "You should eat a balanced diet.";
+      }
+      else if(bmi >= 18.5 && bmi < 24.9){
+        status = "Normal";
+        className = "normal";
+        info = "Great! Your body weight is healthy.";
+      }
+      else if(bmi >= 25 && bmi < 29.9){
+        status = "Overweight";
+        className = "overweight";
+        info = "Try regular exercise and healthy food.";
+      }
+      else{
+        status = "Obese";
+        className = "obese";
+        info = "Consult a healthcare professional.";
+      }
+
+      let resultBox = document.getElementById("result");
+
+      resultBox.style.display = "block";
+      resultBox.className = "result " + className;
+
+      document.getElementById("bmiValue").innerHTML = bmi;
+      document.getElementById("status").innerHTML = status;
+      document.getElementById("info").innerHTML = info;
+    }
+
+  </script>
+
+</body>
+</html>
